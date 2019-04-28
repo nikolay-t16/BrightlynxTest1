@@ -1,10 +1,11 @@
 <template>
     <div class="hello">
         <h1>{{ msg }}</h1>
-        <form name="test" v-on:submit="calculate">
+        <form name="test">
             <float-input v-model=v1 value=v1 @change=onChangev1></float-input>
+            +
             <float-input v-model=v2  value=v2 @change=onChangev2></float-input>
-            <input type="submit" value="Вычислить"/>
+            = {{res}}
         </form>
     </div>
 </template>
@@ -17,24 +18,47 @@
     components: {FloatInput},
     data: function(){
       this.sum = function (v1) {
+        var numAfterPoint = function(number){
+          var str = number.toString();
+          if(str.indexOf(".")==-1)
+            return 0;
+          return str.split('.')[1].length;
+        }
         return function (v2) {
-          return v1 + v2
+          var k = 1;
+          var maxAfterPoint = Math.max(numAfterPoint(v1), numAfterPoint(v2));
+          if(maxAfterPoint>0){
+            k = Math.pow(10,maxAfterPoint);
+            v1 *= k;
+            v2 *= k;
+          }
+          var sum = v1 + v2;
+          if(maxAfterPoint>0){
+            sum /= k;
+          }
+          return sum;
         }
       }
-      return {v1:0.1, v2:0.2};
+      this.calculate = function () {
+        this.res = this.sum(this.v1)(this.v2);
+        return this.res;
+      }
+      this.v1 = 0.1;
+      this.v2 = 0.2;
+      var r = this.calculate();
+      this.res = this.sum(this.v1)(this.v2);
+      return {res:r};
     },
     props: {
       msg: String
     }, methods: {
-      calculate: function (e) {
-        e.preventDefault();
-        console.log(this.sum(this.v1)(this.v2));
-      },
       onChangev1: function (data) {
         this.v1 = +data.val;
+        this.calculate();
       },
       onChangev2: function (data) {
         this.v2 = +data.val;
+        this.calculate();
       }
     }
   }
