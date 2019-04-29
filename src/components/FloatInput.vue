@@ -3,18 +3,23 @@
 </template>
 
 <script>
+  /**
+   * Компонент для ввода числа
+   */
   export default {
     name: 'FloatInput',
     props: {
       value: Number
     },
     data: function () {
-      this.validKey = ["Delete", "Backspace", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+      //Доступные действия
+      this.validKey = ['Delete', 'Backspace', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
       return {
         val: this.value
       }
     },
     methods: {
+      //Ограничения ввода, для того что бы можн было вводить только число
       onKeydown: function (e) {
         if(this.validKey.indexOf(e.key) != -1 ||
          isNumeric(e.key) ||
@@ -24,6 +29,7 @@
         e.preventDefault();
       },
       onKeyup: function () {
+        // Запуск действия для смены значения
         this.$emit('change', { val: this.val })
       }
     }

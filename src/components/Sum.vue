@@ -17,7 +17,19 @@
     name: 'Sum',
     components: {FloatInput},
     data: function(){
+      /**
+       * Функция для вычисления суммы 2 чисел, пример использования - sum(1)(2)
+       * Для корректной обработки дробей переводит в целые числа умножая на 10 в степени.
+       * Нет проверки на слишком большую велечину числа
+       * @param v1
+       * @returns {function(*=): *}
+       */
       this.sum = function (v1) {
+        /**
+         * Возвращает количество занков после точки
+         * @param number
+         * @returns {number}
+         */
         var numAfterPoint = function(number){
           var str = number.toString();
           if(str.indexOf(".")==-1)
