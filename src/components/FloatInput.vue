@@ -1,5 +1,5 @@
 <template>
-    <input v-model=val type="text" placeholder="введите число (1.5)" v-on:keydown="onKeydown" v-on:keyup="onKeyup" />
+    <input v-bind:value="value"  v-on:input="$emit('input', $event.target.value)" type="text" placeholder="введите число (1.5)" v-on:keydown="onKeydown" v-on:keyup="onKeyup" />
 </template>
 
 <script>
@@ -9,7 +9,7 @@
   export default {
     name: 'FloatInput',
     props: {
-      value: Number
+      value: [String, Number]
     },
     data: function () {
       //Доступные действия

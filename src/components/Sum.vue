@@ -2,9 +2,9 @@
     <div class="hello">
         <h1>{{ msg }}</h1>
         <form name="test">
-            <float-input v-model=v1 value=v1 @change=onChangev1></float-input>
+            <float-input v-model=v1 v-on:change=onChange></float-input>
             +
-            <float-input v-model=v2  value=v2 @change=onChangev2></float-input>
+            <float-input v-model=v2 v-on:change=onChange></float-input>
             = {{res}}
         </form>
     </div>
@@ -64,12 +64,7 @@
     props: {
       msg: String
     }, methods: {
-      onChangev1: function (data) {
-        this.v1 = +data.val;
-        this.calculate();
-      },
-      onChangev2: function (data) {
-        this.v2 = +data.val;
+      onChange: function () {
         this.calculate();
       }
     }
